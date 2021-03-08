@@ -1,0 +1,198 @@
+---
+title             : "Reproducible Methods for Face Research"
+shorttitle        : "Face Methods"
+
+author: 
+  - name          : "Lisa DeBruine"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "lisa.debruine@glasgow.ac.uk"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Writing - Original Draft Preparation
+  - name          : "Iris Holzleitner"
+    affiliation   : "1,2"
+    role:
+      - Writing - Review & Editing
+
+affiliation:
+  - id            : "1"
+    institution   : "Institute of Neuroscience & Psychology, University of Glasgow"
+  - id            : "2"
+    institution   : "University of the West of England, Bristol"
+
+authornote: |
+  This research was funded by ERC grant #647910 (KINSHIP).
+
+abstract: |
+  Face stimuli are commonly created in non-reproducible ways. This paper will introduce the open-access online platform webmorph and its associated R package webmorphR. It will explain the technical processes of morphing and transforming through a case study of creating face stimuli from an open-access image set.
+  
+keywords          : "faces; morphing; transforming; reproducible; webmorph"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib","biblio.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : html_document #papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library("webmorph")
+r_refs("r-references.bib")
+
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+
+## Introduction
+
+People manipulate faces. 
+
+Give some examples. 
+
+Scope of this type of research.
+
+### Common Techniques
+
+#### Photoshop/Image editors
+
+- [@Gronenschild_2009]
+  
+#### Commerical morphing 
+
+* 831 Google Scholar responses for "fantamorph face"
+* 158 Google Scholar responses for "WinMorph face"
+* Many others: MorphThing (no longer available), xmorph, et. Basically impossible to survey the literature about the methods used because of poor documentaation
+
+#### Codable Methods
+
+* imagemagick
+* Matlab
+* Psychomorph
+* WebMorph
+  
+
+### Reproducibility!
+
+I gave up on a research project once because I couldn't figure out how to manipulate spatial scale in MatLab to make my stimuli look like a relevant paper. When I contacted the author, they didn't know how the stimuli were created because a postdoc just did it in photoshop.
+
+Faces are sampled, so replications should sample new faces as well as new participants. 
+
+Difficulty in creating equivalent face stimuli is a barrier to this, resulting in stimulus sets that are used across dozens or hundreds of papers. 
+
+* The Chicago Face Database [@CFD_2015] has been cited in almost 800 papers.
+* Ekman POFA **selling** for [$399](https://www.paulekman.com/product/pictures-of-facial-affect-pofa/) for " 110 photographs of facial expressions that have been widely used in cross-cultural studies, and more recently, in neuropsychological research".
+* Image sets are often private and reused without clear attribution (FRL and Perception Lab are particularly bad for this).
+
+### Main techniques
+
+#### Averaging
+
+
+
+* Visualise group differences
+
+#### Transforming
+
+
+* Sexual dimorphism
+
+
+
+
+## Methods
+
+### Averaging
+
+### Transforming
+
+
+## Case Study
+
+### London Face Set
+
+### Delineation
+
+Automatic versus manual delineation.
+
+### Normalisation
+
+Why normalise?
+
+2 point versus Procrustes normalisation (in webmorphR)
+
+```{r procrustes, fig.width = 8, fig.height = 8}
+lisa <- faces("lisa")
+
+orig <- plot(lisa, pt.plot = TRUE, labels = "", nrow = 1)
+
+twopt <- align(lisa, pt1 = 63, pt2 = 81, patch = TRUE) %>% 
+  plot(pt.plot = TRUE, labels = "", nrow = 1)
+
+# any two points that are standard on the image
+# should work for procrustes alignment
+lisa_proc <- align(lisa, pt1 = 63, pt2 = 81,
+                      procrustes = TRUE, patch = TRUE)
+
+procr <- plot(lisa_proc, pt.plot = TRUE, 
+              labels = "", nrow = 1)
+
+cowplot::plot_grid(orig, twopt, procr, nrow = 3, 
+                   labels = c("original", "two-point", "procrustes"))
+```
+
+
+### Masking
+
+(effect in masc paper)
+
+### Averaging
+
+Texture/no
+
+### Symmetrising
+
+How this is different from LL/RR mirroring.
+
+### Sexual dimorphism transform
+
+Continuum
+
+### Self-resemblance transform
+
+
+# Discussion
+
+* head position in 2D images
+  * morphometics
+  * facefuns
+* Natural vs standardised source images
+  * right image for the question
+* Averaging is N=1
+
+
+\newpage
+
+# References
+
+We used `r cite_r("r-references.bib")` to produce this manuscript.
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
